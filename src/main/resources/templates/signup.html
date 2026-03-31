@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="auth-body">
+<div class="auth-container">
+    <div class="auth-left-panel">
+        <div class="logo-mini">F</div>
+        <h1>Create Account</h1>
+        <p>Register quickly and move into the ordering platform.</p>
+    </div>
+
+    <div class="auth-card">
+        <h2>Sign Up</h2>
+        <form action="/saveUser" method="post">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <select name="role" required>
+                <option value="">Select Role</option>
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+            </select>
+            <button type="submit" class="primary-btn full-btn">Create Account</button>
+        </form>
+        <p class="switch-link">Already registered? <a href="/login">Login</a></p>
+    </div>
+</div>
+</body>
+</html>

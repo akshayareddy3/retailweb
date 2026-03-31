@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dashboard-body">
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="brand-inline">
+            <div class="logo-mini">F</div>
+            <span>FoodOrder Admin</span>
+        </div>
+        <a href="/">Home</a>
+        <a href="/admin">Dashboard</a>
+        <a href="/api/products" target="_blank">Products API</a>
+        <a href="/api/orders" target="_blank">Orders API</a>
+    </aside>
+
+    <main class="main-panel">
+        <div class="page-title-row">
+            <div>
+                <h1>Admin Control Center</h1>
+                <p>Manage products, orders, analytics, and inventory.</p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Products</h3>
+                <p th:text="${totalProducts}">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p th:text="${totalOrders}">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Low Stock Alerts</h3>
+                <p>3</p>
+            </div>
+        </div>
+
+        <section class="table-box">
+    <h2>Product Management</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Manage Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.name}">Name</td>
+            <td th:text="${p.category}">Category</td>
+            <td th:text="${p.brand}">Brand</td>
+            <td>₹ <span th:text="${p.price}">0</span></td>
+            <td th:text="${p.stock}">0</td>
+            <td>
+                <div class="stock-actions">
+                    <form th:action="@{'/admin/decreaseStock/' + ${p.id}}" method="post">
+                        <button type="submit" class="stock-btn minus-btn">-</button>
+                    </form>
+
+                    <span class="stock-value" th:text="${p.stock}">0</span>
+
+                    <form th:action="@{'/admin/increaseStock/' + ${p.id}}" method="post">
+                        <button type="submit" class="stock-btn plus-btn">+</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+        <section class="table-box">
+            <h2>Order Management</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${orders}">
+                    <td th:text="${o.customerName}">Customer</td>
+                    <td th:text="${o.items}">Items</td>
+                    <td>₹ <span th:text="${o.totalAmount}">0</span></td>
+                    <td th:text="${o.paymentMethod}">UPI</td>
+                    <td th:text="${o.status}">CONFIRMED</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>

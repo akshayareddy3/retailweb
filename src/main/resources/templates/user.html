@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dashboard-body">
+<header class="topbar">
+    <div class="brand-inline">
+        <div class="logo-mini">F</div>
+        <span>FoodOrder User</span>
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/confirmation">Orders</a>
+    </nav>
+</header>
+
+<section class="page-shell">
+    <div class="page-title-row">
+        <div>
+            <h1>Hello, <span th:text="${username}">Demo User</span></h1>
+            <p>Browse categories, choose products, and place orders instantly.</p>
+        </div>
+    </div>
+
+    <div class="chip-row">
+        <span class="chip">Pizza</span>
+        <span class="chip">Bread</span>
+        <span class="chip">Water</span>
+        <span class="chip">Burger</span>
+        <span class="chip">Beverages</span>
+        <span class="chip">Snacks</span>
+    </div>
+
+    <div class="product-grid">
+        <div class="product-card" th:each="p : ${products}">
+            <img th:src="${p.imageUrl}" alt="product">
+            <div class="product-info">
+                <div class="meta-line">
+                    <span th:text="${p.category}">Pizza</span>
+                    <span th:text="${p.brand}">Brand</span>
+                </div>
+                <h3 th:text="${p.name}">Product</h3>
+                <p class="price">₹ <span th:text="${p.price}">199</span></p>
+
+                <div class="qty-control">
+                    <button type="button" class="qty-btn decrease-btn"
+                            th:attr="data-name=${p.name},data-price=${p.price}">-</button>
+                    <span class="qty-value"
+                          th:attr="id='qty-' + ${#strings.replace(p.name,' ','-')}">0</span>
+                    <button type="button" class="qty-btn increase-btn"
+                            th:attr="data-name=${p.name},data-price=${p.price}">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-box">
+        <h2>Cart</h2>
+        <ul id="cartItems"></ul>
+        <h3>Total: ₹ <span id="cartTotal">0</span></h3>
+        <button class="primary-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+
+    <div class="table-box">
+        <h2>My Orders</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="o : ${orders}">
+                <td th:text="${o.customerName}">Demo User</td>
+                <td th:text="${o.items}">Pizza x 2</td>
+                <td>₹ <span th:text="${o.totalAmount}">0</span></td>
+                <td th:text="${o.paymentMethod}">UPI</td>
+                <td th:text="${o.status}">CONFIRMED</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script src="/app.js"></script>
+</body>
+</html>
